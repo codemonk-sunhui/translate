@@ -3,8 +3,8 @@ use std::error::Error;
 use std::time::Duration;
 use serde::{Deserialize, Serialize};
 
-const APPID: &str = "20231116001882443";
-const SECRET: &str = "123eRDq8OYvBUCJzu9YRHwu";
+const APPID: &str = "xxx";
+const SECRET: &str = "xxx";
 
 pub async fn baidu_translate(q: &String) -> Result<Payload, Box<dyn Error>> {
     let sign = get_sign(q);
