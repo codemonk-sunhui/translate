@@ -1,0 +1,11 @@
+pipeline:
+  build:
+    image: docker.finogeeks.club/build/golang:1.20-alpine-kafka
+    commands:
+      - cargo build
+  docker_latest:
+    image: docker.finogeeks.club/drone/docker
+    repo: docker.finogeeks.club/swan/staff-profile
+    dockerfile: Dockerfile
+    when:
+      event: [push, pull_request]
