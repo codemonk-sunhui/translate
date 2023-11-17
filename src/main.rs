@@ -9,7 +9,7 @@ mod json;
 
 #[launch]
 fn rocket() -> _ {
-    let mut config = Config::release_default();
+    let mut config = Config::debug_default();
     config.address = Ipv4Addr::new(0, 0, 0, 0).into();
 
     rocket::custom(config)
