@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use rocket::serde::json::{Json, Value, json, serde_json};
-use rocket::yansi::Paint;
 
 #[post("/", format = "json", data = "<hm>")]
 async fn translate(hm: Json<HashMap<String, Value>>) -> Json<HashMap<String, Value>> {
@@ -23,10 +22,4 @@ pub fn stage() -> rocket::fairing::AdHoc {
         rocket.mount("/api/v1/translate", routes![translate])
             .register("/api/v1/translate", catchers![not_found])
     })
-}
-
-fn print_hash_map(m: &HashMap<String, Value>) {
-    for (k, v) in m {
-        println!("{}:{}", k, v);
-    }
 }
