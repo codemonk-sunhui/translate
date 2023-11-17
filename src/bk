@@ -1,0 +1,88 @@
+// #[macro_use]
+// extern crate rocket;
+//
+// use reqwest;
+// use std::error::Error;
+// use std::time::Duration;
+// use serde::{Deserialize, Serialize };
+// use std::borrow::Cow;
+// use rocket::State;
+// use rocket::tokio::sync::Mutex;
+//
+// use rocket::serde::json::{Json, Value, json};
+//
+// // #[post("/api/v1/translate", format = "application/json", data = "<HashMap>")]
+// // #[post("/api/v1/translate", data = "<m>")]
+// // async fn hello(m: HashMap<String, String>) -> String {
+// //     let q = m.get("q").expect("error");
+// //     let res = baidu_translate(q).await.unwrap();
+// //     println!("{res}");
+// //     res
+// // }
+// type Id = usize;
+//
+// #[derive(Serialize, Deserialize)]
+// #[serde(crate = "rocket::serde")]
+// struct Message<'r> {
+//     id: Option<Id>,
+//     message: Cow<'r, str>
+// }
+// type MessageList = Mutex<Vec<String>>;
+// type Messages<'r> = &'r State<MessageList>;
+//
+// #[post("/test", format = "json", data = "<message>")]
+// async fn new(message: Json<Message<'_>>, list: Messages<'_>) -> Value {
+//     let mut list = list.lock().await;
+//     let id = list.len();
+//     list.push(message.message.to_string());
+//     json!({ "status": "ok", "id": id })
+// }
+//
+//
+// #[launch]
+// fn rocket() -> _ {
+//     rocket::build().mount("/", routes![new])
+// }
+//
+//
+// async fn baidu_translate(q: &String) -> Result<String, Box<dyn Error>> {
+//     let sign = get_sign(q);
+//     let to = get_to(&q);
+//     let url = format!("https://fanyi-api.baidu.com/api/trans/vip/translate?q={q}&from=auto&to={to}&appid=20231116001882443&salt=123&sign={sign}");
+//     println!("{}", url);
+//     let client = reqwest::Client::new();
+//     let doge = client
+//         .get(url)
+//         .timeout(Duration::from_secs(3))
+//         .send()
+//         .await?
+//         .text()
+//         .await?;
+//     Ok(doge)
+// }
+//
+// fn md5(input: String) -> String {
+//     let digest = md5::compute(input);
+//     format!("{:x}", digest)
+// }
+//
+// fn get_sign(q: &String) -> String {
+//     let text = format!("20231116001882443{q}123eRDq8OYvBUCJzu9YRHwu");
+//     md5(text)
+// }
+//
+// fn get_to(q: &String) -> String {
+//     let c = q.chars().next().expect("none");
+//     return if is_alphabetic(&c) {
+//         String::from("zh")
+//     } else {
+//         String::from("en")
+//     };
+// }
+//
+// pub fn is_alphabetic(c: &char) -> bool {
+//     match c {
+//         'a'..='z' | 'A'..='Z' => true,
+//         _ => false
+//     }
+// }
