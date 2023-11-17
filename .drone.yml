@@ -2,8 +2,8 @@ pipeline:
   build:
     image: docker.finogeeks.club/base/node-rust:16.13.1-alpine
     commands:
-      - export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
-      - export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+      - RUN export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+      - RUN export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
       - cargo build
   docker_latest:
     image: docker.finogeeks.club/drone/docker
