@@ -1,4 +1,4 @@
-FROM docker.finogeeks.club/base/rust:1.20.0
+FROM rustlang/rust:nightly-alpine
 
 COPY target/debug/translate ./translate
 
