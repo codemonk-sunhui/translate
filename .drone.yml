@@ -5,7 +5,7 @@ pipeline:
       - cargo build
   docker_latest:
     image: docker.finogeeks.club/drone/docker
-    repo: docker.finogeeks.club/swan/staff-profile
+    repo: docker.finogeeks.club/swan/translate
     dockerfile: Dockerfile
     when:
       event: [push, pull_request]
