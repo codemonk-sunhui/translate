@@ -4,8 +4,7 @@ extern crate rocket;
 use std::net::Ipv4Addr;
 use rocket::config::{Config};
 use rocket::serde::json::{Json, Value, json};
-use serde::{Deserialize, Serialize};
-use crate::baidu::{baidu_translate, Payload};
+use crate::baidu::{baidu_translate};
 use crate::message::Message;
 
 mod message;
@@ -22,16 +21,15 @@ fn rocket() -> _ {
 }
 
 
-#[post("/", format = "json", data = "<hm>")]
-async fn translate(hm: Json<Message>) -> Json<Message> {
-    let mut a = hm.into_inner();
+#[post("/", format = "json", data = "<message>")]
+async fn translate(message: Json<Message>) -> Json<Message> {
+    let mut a = message.into_inner();
     let content = a.text.content.trim();
     println!("{content}");
+
     let pl = baidu_translate(&content.to_string()).await.unwrap();
     let mut tr = pl.trans_result;
-
     a.text.content = tr.remove(0).dst;
-
     Json(a)
 }
 

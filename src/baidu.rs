@@ -3,11 +3,13 @@ use std::error::Error;
 use std::time::Duration;
 use serde::{Deserialize, Serialize};
 
+const APPID: &str = "20231116001882443";
+const SECRET: &str = "123eRDq8OYvBUCJzu9YRHwu";
 
 pub async fn baidu_translate(q: &String) -> Result<Payload, Box<dyn Error>> {
     let sign = get_sign(q);
     let to = get_to(&q);
-    let url = format!("https://fanyi-api.baidu.com/api/trans/vip/translate?q={q}&from=auto&to={to}&appid=20231116001882443&salt=123&sign={sign}");
+    let url = format!("https://fanyi-api.baidu.com/api/trans/vip/translate?q={q}&from=auto&to={to}&appid={APPID}&salt=123&sign={sign}");
     println!("{}", url);
     let client = reqwest::Client::new();
     let doge = client
@@ -28,7 +30,7 @@ fn md5(input: String) -> String {
 }
 
 fn get_sign(q: &String) -> String {
-    let text = format!("20231116001882443{q}123eRDq8OYvBUCJzu9YRHwu");
+    let text = format!("{APPID}{q}{SECRET}");
     md5(text)
 }
 
