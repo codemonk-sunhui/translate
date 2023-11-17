@@ -25,9 +25,9 @@ fn rocket() -> _ {
 #[post("/", format = "json", data = "<hm>")]
 async fn translate(hm: Json<Message>) -> Json<Message> {
     let mut a = hm.into_inner();
-    let content = a.text.content;
+    let content = a.text.content.trim();
     println!("{content}");
-    let pl = baidu_translate(&content).await.unwrap();
+    let pl = baidu_translate(&content.to_string()).await.unwrap();
     let mut tr = pl.trans_result;
 
     a.text.content = tr.remove(0).dst;
